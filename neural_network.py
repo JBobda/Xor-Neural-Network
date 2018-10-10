@@ -16,23 +16,31 @@ class NeuralNetwork:
         self.num_outputs = num_outputs
 
         #Creates Weight and bias matrices based on number of neurons in input, hidden and output
-        self.weights0 = np.random.random((self.num_inputs, self.num_hidden))
+        self.weights0 = np.random.random((self.num_hidden, self.num_inputs))
         self.bias0 = np.random.random((self.num_hidden, 1))
-        '''
-        print(self.weights0)
-        print()
-        print(self.bias0)
-        print()
-        '''
-        self.weights1 = np.random.random((self.num_hidden, self.num_outputs))
+        self.weights1 = np.random.random((self.num_outputs, self.num_hidden))
         self.bias1 = np.random.random((self.num_outputs, 1))
-        '''
-        print(self.weights1)
-        print()
-        print(self.bias1)
-        '''
 
     def train(self, inputs):
         print("Training")
+
     def predict(self, inputs):
-        print("Predicting")
+        print("Predicting...")
+
+        #Feed forward algortihm, using matrices and weighted sums, we can receive inputs through
+        #the input neurons, feed them forward to the hidden layer using dot products, and finally
+        #bring them to the output layer with one last dot product, lastly we use the sigmoid 
+        #activation function to squish the output between 1 and 0 for all neurons.
+
+        #Calculates the dot product of weights between 1st and 2nd layer and adds bias on top
+        hidden_nodes = (np.dot(self.weights0, inputs)) + self.bias0
+        #Pipe the hidden nodes through the sigmoid function to squish it between 1 and 0
+        hidden_nodes = sigmoid(hidden_nodes)
+
+
+        #Calculates the dot product of weights between 2nd and 3rd layer and adds bias on top
+        output_nodes = np.dot(self.weights1, hidden_nodes) + self.bias1
+        #Pipes all of the output through the sigmoid function to squish it between 1 and 0
+        output = sigmoid(output_nodes)
+
+        return output
