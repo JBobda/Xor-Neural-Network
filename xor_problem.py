@@ -18,5 +18,9 @@ data = [[0, 0, 0],
       --O-
 '''
 brain = nn.NeuralNetwork(2, 3, 1)
-print(brain.predict([[0],
-                     [0]]))
+
+print(brain.predict([0,0]))
+print(brain.predict([0,1]))
+print(brain.predict([1,0]))
+print(brain.predict([1,1]))
+

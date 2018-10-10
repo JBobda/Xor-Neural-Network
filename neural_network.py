@@ -26,7 +26,9 @@ class NeuralNetwork:
 
     def predict(self, inputs):
         print("Predicting...")
-
+        #For user conveniance, the input array is transposed into a column vector
+        inputs = np.array([inputs])
+        inputs = inputs.transpose()
         #Feed forward algortihm, using matrices and weighted sums, we can receive inputs through
         #the input neurons, feed them forward to the hidden layer using dot products, and finally
         #bring them to the output layer with one last dot product, lastly we use the sigmoid 
