@@ -16,10 +16,10 @@ class NeuralNetwork:
         self.learning_rate = learning_rate
 
         #Creates Weight and bias matrices based on number of neurons in input, hidden and output
-        self.weights0 = np.random.random((self.num_hidden, self.num_inputs))
-        self.bias0 = np.random.random((self.num_hidden, 1))
-        self.weights1 = np.random.random((self.num_outputs, self.num_hidden))
-        self.bias1 = np.random.random((self.num_outputs, 1))
+        self.weights0 = np.random.uniform(low=-1.0,high=1.0, size=(self.num_hidden, self.num_inputs))
+        self.bias0 = np.random.uniform(low=-1.0,high=1.0, size=(self.num_hidden, 1))
+        self.weights1 = np.random.uniform(low=-1.0,high=1.0, size=(self.num_outputs, self.num_hidden))
+        self.bias1 = np.random.uniform(low=-1.0,high=1.0, size=(self.num_outputs, 1))
 
     def train(self, inputs, outputs):
         #-------------------------------------------------------------------------------------
