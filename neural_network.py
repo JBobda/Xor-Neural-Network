@@ -41,21 +41,20 @@ class NeuralNetwork:
         outputs = np.array([outputs])
         outputs = outputs.transpose()
         
-        #Get Error of output, ERROR = ANSWER - PREDICTION
-        output_errors = (outputs - predictions) 
+        #Get Error of output, ERROR = PREDICTION - ANSWER
+        output_errors = (predictions - outputs) 
 
         #Calculate Gradients (Using element-wise multiplication)
         output_gradients = sigmoid(predictions, deriv=True)  
         output_gradients *= output_errors
-        output_gradients *= self.learning_rate
 
         #Calculate hidden -> output Deltas
         hidden_nodes_transpose = hidden_nodes.transpose()
-        weights1_deltas = np.dot(output_gradients, hidden_nodes_transpose)
+        weights1_deltas = output_gradients * hidden_nodes_transpose
         bias1_deltas = output_gradients
 
-        self.weights1 = self.weights1 + weights1_deltas
-        self.bias1 = self.bias1 + bias1_deltas
+        self.weights1 = self.weights1 - weights1_deltas * self.learning_rate
+        self.bias1 = self.bias1 - bias1_deltas * self.learning_rate
 
 
         #Layer between Input and Hidden
@@ -68,19 +67,17 @@ class NeuralNetwork:
 
         #Calculate hidden gradient
         hidden_gradients = sigmoid(hidden_nodes, deriv=True) 
-        hidden_gradients *= hidden_errors
-        hidden_gradients *= self.learning_rate
+        hidden_gradients *= output_gradients * weights1_transpose
 
         #Calculate input -> hidden Deltas
         inputs_transpose = inputs.transpose()
-        weights0_deltas = np.dot(hidden_gradients, inputs_transpose)
+        weights0_deltas = hidden_gradients * inputs_transpose
         bias0_deltas = hidden_gradients
 
-        self.weights0 = self.weights0 + weights0_deltas
-        self.bias0 = self.bias0 + bias0_deltas
+        self.weights0 = self.weights0 - weights0_deltas * self.learning_rate
+        self.bias0 = self.bias0 - bias0_deltas * self.learning_rate
 
     def predict(self, inputs):
-        print("Predicting...")
         #For user conveniance, the input array is transposed into a column vector
         inputs = np.array([inputs])
         inputs = inputs.transpose()
