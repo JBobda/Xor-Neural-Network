@@ -63,7 +63,7 @@ class NeuralNetwork:
         weights1_transpose = self.weights1.transpose()
 
         #Calculate the error for each of the hidden neurons using matrix multiplication
-        hidden_errors = weights1_transpose * output_errors
+        hidden_errors = weights1_transpose * sigmoid(predictions, deriv=True) * output_errors
 
         #Calculate hidden gradient
         hidden_gradients = sigmoid(hidden_nodes, deriv=True) 
